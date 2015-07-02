@@ -63,6 +63,11 @@
             this.dlgOpenFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.txtKeyCertGIIN = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.btnBrowseKeyCert2 = new System.Windows.Forms.Button();
+            this.txtKeyCert2 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblLoadXML
@@ -192,7 +197,7 @@
             // btnBrowseNotificationZip
             // 
             this.btnBrowseNotificationZip.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrowseNotificationZip.Location = new System.Drawing.Point(474, 47);
+            this.btnBrowseNotificationZip.Location = new System.Drawing.Point(687, 47);
             this.btnBrowseNotificationZip.Name = "btnBrowseNotificationZip";
             this.btnBrowseNotificationZip.Size = new System.Drawing.Size(30, 23);
             this.btnBrowseNotificationZip.TabIndex = 16;
@@ -202,7 +207,7 @@
             // 
             // txtNotificationZip
             // 
-            this.txtNotificationZip.Location = new System.Drawing.Point(295, 49);
+            this.txtNotificationZip.Location = new System.Drawing.Point(508, 49);
             this.txtNotificationZip.Name = "txtNotificationZip";
             this.txtNotificationZip.Size = new System.Drawing.Size(173, 20);
             this.txtNotificationZip.TabIndex = 15;
@@ -210,7 +215,7 @@
             // lblZipFile
             // 
             this.lblZipFile.AutoSize = true;
-            this.lblZipFile.Location = new System.Drawing.Point(295, 33);
+            this.lblZipFile.Location = new System.Drawing.Point(508, 33);
             this.lblZipFile.Name = "lblZipFile";
             this.lblZipFile.Size = new System.Drawing.Size(41, 13);
             this.lblZipFile.TabIndex = 14;
@@ -219,7 +224,7 @@
             // btnBrowseRecCert
             // 
             this.btnBrowseRecCert.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrowseRecCert.Location = new System.Drawing.Point(474, 97);
+            this.btnBrowseRecCert.Location = new System.Drawing.Point(687, 97);
             this.btnBrowseRecCert.Name = "btnBrowseRecCert";
             this.btnBrowseRecCert.Size = new System.Drawing.Size(30, 23);
             this.btnBrowseRecCert.TabIndex = 19;
@@ -229,7 +234,7 @@
             // 
             // txtReceiverCert
             // 
-            this.txtReceiverCert.Location = new System.Drawing.Point(295, 99);
+            this.txtReceiverCert.Location = new System.Drawing.Point(508, 99);
             this.txtReceiverCert.Name = "txtReceiverCert";
             this.txtReceiverCert.Size = new System.Drawing.Size(173, 20);
             this.txtReceiverCert.TabIndex = 18;
@@ -237,7 +242,7 @@
             // lblReceiverCert
             // 
             this.lblReceiverCert.AutoSize = true;
-            this.lblReceiverCert.Location = new System.Drawing.Point(295, 83);
+            this.lblReceiverCert.Location = new System.Drawing.Point(508, 83);
             this.lblReceiverCert.Name = "lblReceiverCert";
             this.lblReceiverCert.Size = new System.Drawing.Size(209, 13);
             this.lblReceiverCert.TabIndex = 17;
@@ -245,7 +250,7 @@
             // 
             // txtRecKeyPassword
             // 
-            this.txtRecKeyPassword.Location = new System.Drawing.Point(295, 142);
+            this.txtRecKeyPassword.Location = new System.Drawing.Point(508, 142);
             this.txtRecKeyPassword.Name = "txtRecKeyPassword";
             this.txtRecKeyPassword.PasswordChar = '*';
             this.txtRecKeyPassword.Size = new System.Drawing.Size(173, 20);
@@ -254,7 +259,7 @@
             // lblRecPass
             // 
             this.lblRecPass.AutoSize = true;
-            this.lblRecPass.Location = new System.Drawing.Point(295, 126);
+            this.lblRecPass.Location = new System.Drawing.Point(508, 126);
             this.lblRecPass.Name = "lblRecPass";
             this.lblRecPass.Size = new System.Drawing.Size(155, 13);
             this.lblRecPass.TabIndex = 20;
@@ -262,7 +267,7 @@
             // 
             // btnDecryptZip
             // 
-            this.btnDecryptZip.Location = new System.Drawing.Point(295, 170);
+            this.btnDecryptZip.Location = new System.Drawing.Point(508, 170);
             this.btnDecryptZip.Name = "btnDecryptZip";
             this.btnDecryptZip.Size = new System.Drawing.Size(173, 23);
             this.btnDecryptZip.TabIndex = 22;
@@ -272,7 +277,7 @@
             // 
             // txtSenderCode
             // 
-            this.txtSenderCode.Location = new System.Drawing.Point(295, 212);
+            this.txtSenderCode.Location = new System.Drawing.Point(508, 212);
             this.txtSenderCode.Name = "txtSenderCode";
             this.txtSenderCode.Size = new System.Drawing.Size(69, 20);
             this.txtSenderCode.TabIndex = 24;
@@ -280,7 +285,7 @@
             // lblSender
             // 
             this.lblSender.AutoSize = true;
-            this.lblSender.Location = new System.Drawing.Point(295, 196);
+            this.lblSender.Location = new System.Drawing.Point(508, 196);
             this.lblSender.Name = "lblSender";
             this.lblSender.Size = new System.Drawing.Size(69, 13);
             this.lblSender.TabIndex = 23;
@@ -288,7 +293,7 @@
             // 
             // txtReceiverCode
             // 
-            this.txtReceiverCode.Location = new System.Drawing.Point(395, 212);
+            this.txtReceiverCode.Location = new System.Drawing.Point(608, 212);
             this.txtReceiverCode.Name = "txtReceiverCode";
             this.txtReceiverCode.Size = new System.Drawing.Size(78, 20);
             this.txtReceiverCode.TabIndex = 26;
@@ -296,7 +301,7 @@
             // lblReceiver
             // 
             this.lblReceiver.AutoSize = true;
-            this.lblReceiver.Location = new System.Drawing.Point(395, 196);
+            this.lblReceiver.Location = new System.Drawing.Point(608, 196);
             this.lblReceiver.Name = "lblReceiver";
             this.lblReceiver.Size = new System.Drawing.Size(78, 13);
             this.lblReceiver.TabIndex = 25;
@@ -305,7 +310,7 @@
             // btnBrowseOutput
             // 
             this.btnBrowseOutput.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrowseOutput.Location = new System.Drawing.Point(475, 258);
+            this.btnBrowseOutput.Location = new System.Drawing.Point(688, 258);
             this.btnBrowseOutput.Name = "btnBrowseOutput";
             this.btnBrowseOutput.Size = new System.Drawing.Size(29, 23);
             this.btnBrowseOutput.TabIndex = 29;
@@ -315,7 +320,7 @@
             // 
             // txtNotificationFolder
             // 
-            this.txtNotificationFolder.Location = new System.Drawing.Point(295, 258);
+            this.txtNotificationFolder.Location = new System.Drawing.Point(508, 258);
             this.txtNotificationFolder.Name = "txtNotificationFolder";
             this.txtNotificationFolder.Size = new System.Drawing.Size(173, 20);
             this.txtNotificationFolder.TabIndex = 28;
@@ -323,7 +328,7 @@
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
-            this.lblOutput.Location = new System.Drawing.Point(295, 242);
+            this.lblOutput.Location = new System.Drawing.Point(508, 242);
             this.lblOutput.Name = "lblOutput";
             this.lblOutput.Size = new System.Drawing.Size(127, 13);
             this.lblOutput.TabIndex = 27;
@@ -354,17 +359,65 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(295, 9);
+            this.label2.Location = new System.Drawing.Point(508, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(123, 13);
             this.label2.TabIndex = 31;
             this.label2.Text = "Decrypting a Notification";
             // 
+            // txtKeyCertGIIN
+            // 
+            this.txtKeyCertGIIN.Location = new System.Drawing.Point(269, 231);
+            this.txtKeyCertGIIN.Name = "txtKeyCertGIIN";
+            this.txtKeyCertGIIN.Size = new System.Drawing.Size(173, 20);
+            this.txtKeyCertGIIN.TabIndex = 36;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(269, 215);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(29, 13);
+            this.label4.TabIndex = 35;
+            this.label4.Text = "GIIN";
+            // 
+            // btnBrowseKeyCert2
+            // 
+            this.btnBrowseKeyCert2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBrowseKeyCert2.Location = new System.Drawing.Point(451, 185);
+            this.btnBrowseKeyCert2.Name = "btnBrowseKeyCert2";
+            this.btnBrowseKeyCert2.Size = new System.Drawing.Size(28, 23);
+            this.btnBrowseKeyCert2.TabIndex = 34;
+            this.btnBrowseKeyCert2.Text = "...";
+            this.btnBrowseKeyCert2.UseVisualStyleBackColor = true;
+            this.btnBrowseKeyCert2.Click += new System.EventHandler(this.btnBrowseKeyCert2_Click);
+            // 
+            // txtKeyCert2
+            // 
+            this.txtKeyCert2.Location = new System.Drawing.Point(269, 185);
+            this.txtKeyCert2.Name = "txtKeyCert2";
+            this.txtKeyCert2.Size = new System.Drawing.Size(173, 20);
+            this.txtKeyCert2.TabIndex = 33;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(269, 169);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(58, 13);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "Secondary";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(528, 296);
+            this.ClientSize = new System.Drawing.Size(730, 292);
+            this.Controls.Add(this.txtKeyCertGIIN);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.btnBrowseKeyCert2);
+            this.Controls.Add(this.txtKeyCert2);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnBrowseOutput);
@@ -442,6 +495,11 @@
         private System.Windows.Forms.FolderBrowserDialog dlgOpenFolder;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtKeyCertGIIN;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btnBrowseKeyCert2;
+        private System.Windows.Forms.TextBox txtKeyCert2;
+        private System.Windows.Forms.Label label5;
     }
 }
 
