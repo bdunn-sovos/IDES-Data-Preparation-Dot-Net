@@ -66,6 +66,17 @@ namespace WindowsFormsApplication1
                 return;
             }
 
+            bool Secondary = !(string.IsNullOrWhiteSpace(txtKeyCert2.Text));
+            if (Secondary)
+            {
+                if (string.IsNullOrWhiteSpace(txtKeyCertGIIN.Text))
+                {
+                    // files validation
+                    MessageBox.Show("Secondary reciver was not specified!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
             try
             {
                 // load XML file content
@@ -91,6 +102,7 @@ namespace WindowsFormsApplication1
 
                 // encrypt file & save to disk
                 string encryptedFileName = zipFileName.Replace(".zip", "");
+                string encryptedFileName2 = encryptedFileName;
                 string payloadFileName = encryptedFileName;
                 AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector);
 
@@ -99,8 +111,14 @@ namespace WindowsFormsApplication1
                 //aesEncryptionKey = encoding.GetBytes("test");
 
                 //  Byte[] bytes = System.Text.Encoder.GetBytes("some test data");
-                encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key"; ;
+                encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key";
                 AesManager.EncryptAesKey(aesEncryptionKey, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName);
+
+                if (Secondary)
+                {
+                    encryptedFileName2 = Path.GetDirectoryName(zipFileName) + "\\" + txtKeyCertGIIN.Text;
+                    AesManager.EncryptAesKey(aesEncryptionKey, txtKeyCert2.Text, null, encryptedFileName2);
+                }
 
                 // cleanup
                 envelopingSignature = null;
@@ -138,6 +156,13 @@ namespace WindowsFormsApplication1
                     writer.WriteStartElement("FATCAEntityReceiverId");
                     writer.WriteString("000000.00000.TA.840");
                     writer.WriteEndElement();
+                    /*not sure if needed, can't find any instructions
+                                        if (Secondary)
+                                        {
+                                            writer.WriteStartElement("HCTAFATCAEntityId");
+                                            writer.WriteString(txtKeyCertGIIN.Text);
+                                            writer.WriteEndElement();
+                                        }*/
                     writer.WriteStartElement("FATCAEntCommunicationTypeCd");
                     writer.WriteString("RPT");
                     writer.WriteEndElement();
@@ -163,6 +188,10 @@ namespace WindowsFormsApplication1
                     // add enveloping signature to ZIP file
                     ZipManager.CreateArchive(metadataFileName, filePath + "\\" + senderFile + ".zip");
                     ZipManager.UpdateArchive(encryptedFileName, filePath + "\\" + senderFile + ".zip");
+                    if (Secondary)
+                    {
+                        ZipManager.UpdateArchive(encryptedFileName2, filePath + "\\" + senderFile + ".zip");
+                    }
                     ZipManager.UpdateArchive(payloadFileName, filePath + "\\" + senderFile + ".zip");
 
                     // success
@@ -303,6 +332,11 @@ namespace WindowsFormsApplication1
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnBrowseKeyCert2_Click(object sender, EventArgs e)
+        {
+            txtKeyCert2.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
         }
 
      
