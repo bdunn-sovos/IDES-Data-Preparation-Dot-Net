@@ -68,6 +68,9 @@
             this.btnBrowseKeyCert2 = new System.Windows.Forms.Button();
             this.txtKeyCert2 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lblLoadXML
@@ -164,9 +167,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(23, 169);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(240, 13);
+            this.label3.Size = new System.Drawing.Size(81, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Encryption Key Certificate (Receiver\'s Public Key)";
+            this.label3.Text = "IRS Public Key)";
             // 
             // txtKeyCertPassword
             // 
@@ -180,9 +183,9 @@
             this.lblKeyEncryptionCertPassword.AutoSize = true;
             this.lblKeyEncryptionCertPassword.Location = new System.Drawing.Point(23, 215);
             this.lblKeyEncryptionCertPassword.Name = "lblKeyEncryptionCertPassword";
-            this.lblKeyEncryptionCertPassword.Size = new System.Drawing.Size(229, 13);
+            this.lblKeyEncryptionCertPassword.Size = new System.Drawing.Size(200, 13);
             this.lblKeyEncryptionCertPassword.TabIndex = 11;
-            this.lblKeyEncryptionCertPassword.Text = "Encryption Key Certificate password (if needed)";
+            this.lblKeyEncryptionCertPassword.Text = "IRS  Key Certificate password (if needed)";
             // 
             // btnSignXML
             // 
@@ -377,9 +380,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(269, 215);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 13);
+            this.label4.Size = new System.Drawing.Size(127, 13);
             this.label4.TabIndex = 35;
-            this.label4.Text = "GIIN";
+            this.label4.Text = "Option 2 Jurisdiction GIIN";
             // 
             // btnBrowseKeyCert2
             // 
@@ -404,9 +407,27 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(269, 169);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(58, 13);
+            this.label5.Size = new System.Drawing.Size(155, 13);
             this.label5.TabIndex = 32;
-            this.label5.Text = "Secondary";
+            this.label5.Text = "Option 2 Jurisdiction Public Key";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 7);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(135, 26);
+            this.label6.TabIndex = 37;
+            this.label6.Text = "Complete below for Model1\r\nOption 2 countries";
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Location = new System.Drawing.Point(259, 118);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(231, 160);
+            this.panel1.TabIndex = 38;
             // 
             // MainForm
             // 
@@ -450,9 +471,12 @@
             this.Controls.Add(this.btnBrowseXml);
             this.Controls.Add(this.txtXmlFile);
             this.Controls.Add(this.lblLoadXML);
+            this.Controls.Add(this.panel1);
             this.Name = "MainForm";
             this.Text = "IDES Data Preparation";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -500,6 +524,8 @@
         private System.Windows.Forms.Button btnBrowseKeyCert2;
         private System.Windows.Forms.TextBox txtKeyCert2;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
