@@ -116,7 +116,7 @@ namespace WindowsFormsApplication1
 
                 if (Secondary)
                 {
-                    encryptedFileName2 = Path.GetDirectoryName(zipFileName) + "\\" + txtKeyCertGIIN.Text;
+                    encryptedFileName2 = Path.GetDirectoryName(zipFileName) + "\\" + txtKeyCertGIIN.Text + "_Key";
                     AesManager.EncryptAesKey(aesEncryptionKey, txtKeyCert2.Text, null, encryptedFileName2);
                 }
 
