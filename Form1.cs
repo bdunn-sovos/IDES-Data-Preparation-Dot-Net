@@ -154,7 +154,14 @@ namespace WindowsFormsApplication1
                     writer.WriteString(senderGIIN);
                     writer.WriteEndElement();
                     writer.WriteStartElement("FATCAEntityReceiverId");
-                    writer.WriteString("000000.00000.TA.840");
+                    if (Secondary)
+                    {
+                        writer.WriteString(txtKeyCertGIIN.Text);
+                    }
+                    else
+                    {
+                        writer.WriteString("000000.00000.TA.840");
+                    }
                     writer.WriteEndElement();
                     /*not sure if needed, can't find any instructions
                                         if (Secondary)
