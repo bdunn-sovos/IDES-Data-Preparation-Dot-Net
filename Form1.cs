@@ -87,7 +87,7 @@ namespace WindowsFormsApplication1
                 // perform sign
                 byte[] envelopingSignature = XmlManager.Sign(XmlSignatureType.Enveloping, xmlContent, txtCert.Text, txtCertPass.Text);
 
-                string envelopingFileName = txtXmlFile.Text.Replace(".xml", "_Payload.xml");
+                string envelopingFileName = filePath + "\\" + senderGIIN + "_Payload.xml"; //txtXmlFile.Text.Replace(".xml", "_Payload.xml");
                 string zipFileName = envelopingFileName.Replace(".xml", ".zip");
 
                 // save enveloping version to disk
