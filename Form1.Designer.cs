@@ -70,6 +70,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cbTaxYear = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -429,11 +431,30 @@
             this.panel1.Size = new System.Drawing.Size(231, 160);
             this.panel1.TabIndex = 38;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(272, 60);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(50, 13);
+            this.label7.TabIndex = 39;
+            this.label7.Text = "Tax Year";
+            // 
+            // cbTaxYear
+            // 
+            this.cbTaxYear.FormattingEnabled = true;
+            this.cbTaxYear.Location = new System.Drawing.Point(272, 76);
+            this.cbTaxYear.Name = "cbTaxYear";
+            this.cbTaxYear.Size = new System.Drawing.Size(170, 21);
+            this.cbTaxYear.TabIndex = 41;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(730, 292);
+            this.Controls.Add(this.cbTaxYear);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.txtKeyCertGIIN);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnBrowseKeyCert2);
@@ -526,6 +547,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cbTaxYear;
     }
 }
 
