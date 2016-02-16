@@ -14,6 +14,13 @@ namespace WindowsFormsApplication1
         public MainForm()
         {
             InitializeComponent();
+            int year = DateTime.Now.Year;
+            for (int i = 2014; i <= year; i++)
+            {
+                cbTaxYear.Items.Add(i.ToString());
+            }
+            year--;
+            cbTaxYear.Text = year.ToString();
         }
 
         
@@ -180,7 +187,7 @@ namespace WindowsFormsApplication1
                     writer.WriteString(fileCreationDateTime);
                     writer.WriteEndElement();
                     writer.WriteStartElement("TaxYear");
-                    writer.WriteString("2014");
+                    writer.WriteString(cbTaxYear.Text);
                     writer.WriteEndElement();
                     writer.WriteStartElement("FileRevisionInd");
                     writer.WriteString("false");
