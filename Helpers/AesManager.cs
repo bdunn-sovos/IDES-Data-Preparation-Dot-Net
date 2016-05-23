@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 
 namespace WindowsFormsApplication1
 {
@@ -50,12 +51,16 @@ namespace WindowsFormsApplication1
         /// <param name="filePath">Full path of the file to be encrypted</param>
         /// <param name="outputFilePath">Full path of the encrypted file</param>
         /// <param name="key">AES encryption key</param>
-        /// <param name="iv">AES initialization vector</param>
-        public static void EncryptFile(string filePath, string outputFilePath, byte[] key, byte[] iv)
+        /// <param name="useECBMode">boolean to determine if ECB or CBC mode is used</param>
+        public static void EncryptFile(string filePath, string outputFilePath, byte[] key, byte[] iv, bool useECBMode)
         {
             using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider())
             {
-                aes.Mode = CipherMode.ECB;
+                if (useECBMode)
+                    aes.Mode = CipherMode.ECB;
+                else
+                    aes.Mode = CipherMode.CBC;
+                
                 aes.Key = key;
                 aes.IV = iv;
 
@@ -83,11 +88,16 @@ namespace WindowsFormsApplication1
         /// <param name="outputFilePath">Full path of the decrypted file</param>
         /// <param name="key">AES decryption key</param>
         /// <param name="iv">AES initialization vector</param>
-        public static void DecryptFile(string filePath, string outputFilePath, byte[] key, byte[] iv)
+        /// <param name="useECBMode">boolean to determine if ECB or CBC mode is used</param>
+        public static void DecryptFile(string filePath, string outputFilePath, byte[] key, byte[] iv, bool useECBMode)
         {
             using (AesCryptoServiceProvider aes = new AesCryptoServiceProvider())
             {
-                aes.Mode = CipherMode.ECB;
+                if (useECBMode)
+                    aes.Mode = CipherMode.ECB;
+                else
+                    aes.Mode = CipherMode.CBC;
+                
                 aes.Key = key;
                 aes.IV = iv;
 
@@ -111,12 +121,20 @@ namespace WindowsFormsApplication1
         /// Encrypts a key using the public key from the specified certificate
         /// </summary>
         /// <param name="payload">The data to encrypt</param>
+        /// <param name="payloadIV">IV to encrypt</param>
         /// <param name="encryptionCert">The certificate used for encryption</param>
         /// <param name="encryptionCertPassword">The password for the encryption certificate</param>
         /// <param name="outputFilePath">Full path of the encrypted file</param>
-        public static void EncryptAesKey(byte[] payload, string encryptionCert, string encryptionCertPassword, string outputFilePath)
+        /// <param name="useECBMode">boolean to determine if ECB or CBC mode is used</param>
+        public static void EncryptAesKey(byte[] payload, byte[] payloadIV, string encryptionCert, string encryptionCertPassword, string outputFilePath, bool useECBMode)
         {
             X509Certificate2 cert = new X509Certificate2(encryptionCert, encryptionCertPassword);
+
+            //If we are not using ECB mode, we need to add the IV to the key before we encrypt
+            if (useECBMode != true)
+            {
+                payload = payload.Concat(payloadIV).ToArray();
+            }    
 
             using (RSACryptoServiceProvider rsa = cert.PublicKey.Key as RSACryptoServiceProvider)
             {

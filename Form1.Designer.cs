@@ -72,6 +72,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.cbTaxYear = new System.Windows.Forms.ComboBox();
+            this.radCBC = new System.Windows.Forms.RadioButton();
+            this.radECB = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -448,11 +450,35 @@
             this.cbTaxYear.Size = new System.Drawing.Size(170, 21);
             this.cbTaxYear.TabIndex = 41;
             // 
+            // radCBC
+            // 
+            this.radCBC.AutoSize = true;
+            this.radCBC.Checked = true;
+            this.radCBC.Location = new System.Drawing.Point(275, 12);
+            this.radCBC.Name = "radCBC";
+            this.radCBC.Size = new System.Drawing.Size(76, 17);
+            this.radCBC.TabIndex = 46;
+            this.radCBC.TabStop = true;
+            this.radCBC.Text = "CBC Mode";
+            this.radCBC.UseVisualStyleBackColor = true;
+            // 
+            // radECB
+            // 
+            this.radECB.AutoSize = true;
+            this.radECB.Location = new System.Drawing.Point(275, 32);
+            this.radECB.Name = "radECB";
+            this.radECB.Size = new System.Drawing.Size(76, 17);
+            this.radECB.TabIndex = 45;
+            this.radECB.Text = "ECB Mode";
+            this.radECB.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(730, 292);
+            this.Controls.Add(this.radCBC);
+            this.Controls.Add(this.radECB);
             this.Controls.Add(this.cbTaxYear);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.txtKeyCertGIIN);
@@ -549,6 +575,8 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cbTaxYear;
+        private System.Windows.Forms.RadioButton radCBC;
+        private System.Windows.Forms.RadioButton radECB;
     }
 }
 

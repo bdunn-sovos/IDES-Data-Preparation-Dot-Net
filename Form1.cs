@@ -5,6 +5,7 @@ using System.Xml;
 using System.Text;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 
 
 namespace WindowsFormsApplication1
@@ -105,13 +106,13 @@ namespace WindowsFormsApplication1
 
                 // generate AES key (32 bytes) & default initialization vector (empty)
                 byte[] aesEncryptionKey = AesManager.GenerateRandomKey(AesManager.KeySize / 8);
-                byte[] aesEncryptionVector = AesManager.GenerateRandomKey(16, true);
+                byte[] aesEncryptionVector = AesManager.GenerateRandomKey(16, radECB.Checked);
 
                 // encrypt file & save to disk
                 string encryptedFileName = zipFileName.Replace(".zip", "");
                 string encryptedFileName2 = encryptedFileName;
                 string payloadFileName = encryptedFileName;
-                AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector);
+                AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector, radECB.Checked);
 
                 // encrypt key with public key of certificate & save to disk
                 // System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
@@ -119,12 +120,12 @@ namespace WindowsFormsApplication1
 
                 //  Byte[] bytes = System.Text.Encoder.GetBytes("some test data");
                 encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key";
-                AesManager.EncryptAesKey(aesEncryptionKey, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName);
+                AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName, radECB.Checked);
 
                 if (Secondary)
                 {
                     encryptedFileName2 = Path.GetDirectoryName(zipFileName) + "\\" + txtKeyCertGIIN.Text + "_Key";
-                    AesManager.EncryptAesKey(aesEncryptionKey, txtKeyCert2.Text, null, encryptedFileName2);
+                    AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert2.Text, null, encryptedFileName2, radECB.Checked);
                 }
 
                 // cleanup
@@ -297,10 +298,15 @@ namespace WindowsFormsApplication1
                 // decrypt AES key & generate default (empty) initialization vector
                 decryptedAesKey = AesManager.DecryptAesKey(encryptedAesKey, txtReceiverCert.Text, txtRecKeyPassword.Text);
                 aesVector = AesManager.GenerateRandomKey(16, true);
+                if (radECB.Checked != true)
+                {
+                    aesVector = decryptedAesKey.Skip(32).Take(16).ToArray();
+                    decryptedAesKey = decryptedAesKey.Take(32).ToArray();
+                }
 
                 // decrypt encrypted ZIP file using decrypted AES key
                 string decryptedFileName = encryptedPayloadFile.Replace("_Payload", "_Payload_decrypted.zip");
-                AesManager.DecryptFile(encryptedPayloadFile, decryptedFileName, decryptedAesKey, aesVector);
+                AesManager.DecryptFile(encryptedPayloadFile, decryptedFileName, decryptedAesKey, aesVector, radECB.Checked);
 
 
                 //Deflate the decrypted zip archive
