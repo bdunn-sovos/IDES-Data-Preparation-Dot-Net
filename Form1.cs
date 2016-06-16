@@ -68,9 +68,9 @@ namespace WindowsFormsApplication1
                 return;
             }
 
-            /* SM: convey code
-            bool Secondary = !(string.IsNullOrWhiteSpace(txtKeyCert2.Text));
-            if (Secondary)
+            //Sovos start
+            var secondary = !(string.IsNullOrWhiteSpace(txtKeyCert2.Text));
+            if (secondary)
             {
                 if (string.IsNullOrWhiteSpace(txtKeyCertGIIN.Text))
                 {
@@ -78,7 +78,8 @@ namespace WindowsFormsApplication1
                     MessageBox.Show("Secondary reciver was not specified!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-            } */
+            } 
+            //Sovos end
 
             try
             {
@@ -163,7 +164,7 @@ namespace WindowsFormsApplication1
                     writer.WriteString(senderGIIN);
                     writer.WriteEndElement();
                     writer.WriteStartElement("FATCAEntityReceiverId");
-                    if (Secondary)
+                    if (secondary)
                     {
                         writer.WriteString(txtKeyCertGIIN.Text);
                     }
@@ -388,7 +389,7 @@ namespace WindowsFormsApplication1
         {
             txtKeyCert2.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
         }
-/*
+/*/
 
         private void chkM1O2_CheckedChanged(object sender, EventArgs e)
         {

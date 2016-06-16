@@ -63,22 +63,26 @@
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
             this.dlgOpenFolder = new System.Windows.Forms.FolderBrowserDialog();
-/*sm convey
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtKeyCertGIIN = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnBrowseKeyCert2 = new System.Windows.Forms.Button();
+            //Sovos start
             this.txtKeyCert2 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cbTaxYear = new System.Windows.Forms.ComboBox();
-            this.radCBC = new System.Windows.Forms.RadioButton();
-            this.radECB = new System.Windows.Forms.RadioButton();
-            this.panel1.SuspendLayout();
-*/
+            this.txtKeyCertGIIN = new System.Windows.Forms.TextBox();
+            //Sovos end
+            /*sm convey
+                        this.label1 = new System.Windows.Forms.Label();
+                        this.label2 = new System.Windows.Forms.Label();
+                        
+                        this.label4 = new System.Windows.Forms.Label();
+                        this.btnBrowseKeyCert2 = new System.Windows.Forms.Button();
+
+                        this.label5 = new System.Windows.Forms.Label();
+                        this.label6 = new System.Windows.Forms.Label();
+                        this.panel1 = new System.Windows.Forms.Panel();
+                        this.label7 = new System.Windows.Forms.Label();
+                        this.cbTaxYear = new System.Windows.Forms.ComboBox();
+                        this.radCBC = new System.Windows.Forms.RadioButton();
+                        this.radECB = new System.Windows.Forms.RadioButton();
+                        this.panel1.SuspendLayout();
+            */
             this.chkM1O2 = new System.Windows.Forms.CheckBox();
             this.btnBrowseHCTACert = new System.Windows.Forms.Button();
             this.txtHCTACert = new System.Windows.Forms.TextBox();
@@ -298,44 +302,40 @@
             this.btnDecryptZip.UseVisualStyleBackColor = true;
             this.btnDecryptZip.Click += new System.EventHandler(this.btnDecryptZip_Click);
             // 
-/*sm convey
-            // txtSenderCode
+            /*sm convey
+                        // txtSenderCode
+                        // 
+                        this.txtSenderCode.Location = new System.Drawing.Point(508, 212);
+                        this.txtSenderCode.Name = "txtSenderCode";
+                        this.txtSenderCode.Size = new System.Drawing.Size(69, 20);
+                        this.txtSenderCode.TabIndex = 24;
+                        // 
+                        // lblSender
+                        // 
+                        this.lblSender.AutoSize = true;
+                        this.lblSender.Location = new System.Drawing.Point(508, 196);
+                        this.lblSender.Name = "lblSender";
+                        this.lblSender.Size = new System.Drawing.Size(69, 13);
+                        this.lblSender.TabIndex = 23;
+                        this.lblSender.Text = "Sender Code";
+                        // 
+                        // txtReceiverCode
+                        // 
+                        this.txtReceiverCode.Location = new System.Drawing.Point(608, 212);
+                        this.txtReceiverCode.Name = "txtReceiverCode";
+                        this.txtReceiverCode.Size = new System.Drawing.Size(78, 20);
+                        this.txtReceiverCode.TabIndex = 26;
+                        // 
+                        // lblReceiver
+                        // 
+                        this.lblReceiver.AutoSize = true;
+                        this.lblReceiver.Location = new System.Drawing.Point(608, 196);
+                        this.lblReceiver.Name = "lblReceiver";
+                        this.lblReceiver.Size = new System.Drawing.Size(78, 13);
+                        this.lblReceiver.TabIndex = 25;
+                        this.lblReceiver.Text = "Receiver Code";
+                        */
             // 
-            this.txtSenderCode.Location = new System.Drawing.Point(508, 212);
-            this.txtSenderCode.Name = "txtSenderCode";
-            this.txtSenderCode.Size = new System.Drawing.Size(69, 20);
-            this.txtSenderCode.TabIndex = 24;
-            // 
-            // lblSender
-            // 
-            this.lblSender.AutoSize = true;
-            this.lblSender.Location = new System.Drawing.Point(508, 196);
-            this.lblSender.Name = "lblSender";
-            this.lblSender.Size = new System.Drawing.Size(69, 13);
-            this.lblSender.TabIndex = 23;
-            this.lblSender.Text = "Sender Code";
-            // 
-            // txtReceiverCode
-            // 
-            this.txtReceiverCode.Location = new System.Drawing.Point(608, 212);
-            this.txtReceiverCode.Name = "txtReceiverCode";
-            this.txtReceiverCode.Size = new System.Drawing.Size(78, 20);
-            this.txtReceiverCode.TabIndex = 26;
-            // 
-            // lblReceiver
-            // 
-            this.lblReceiver.AutoSize = true;
-            this.lblReceiver.Location = new System.Drawing.Point(608, 196);
-            this.lblReceiver.Name = "lblReceiver";
-            this.lblReceiver.Size = new System.Drawing.Size(78, 13);
-            this.lblReceiver.TabIndex = 25;
-            this.lblReceiver.Text = "Receiver Code";
-            // 
-            // btnBrowseOutput
-            // 
-            this.btnBrowseOutput.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrowseOutput.Location = new System.Drawing.Point(688, 258);
-*/
             // btnBrowseOutput
             // 
             this.btnBrowseOutput.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -375,52 +375,8 @@
             // dlgOpenFolder
             // 
             this.dlgOpenFolder.RootFolder = System.Environment.SpecialFolder.MyComputer;
-            // 
-/*sm convey
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 13);
-            this.label1.TabIndex = 30;
-            this.label1.Text = "Create a Transmission File";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(508, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(123, 13);
-            this.label2.TabIndex = 31;
-            this.label2.Text = "Decrypting a Notification";
-            // 
-            // txtKeyCertGIIN
-            // 
-            this.txtKeyCertGIIN.Location = new System.Drawing.Point(269, 231);
-            this.txtKeyCertGIIN.Name = "txtKeyCertGIIN";
-            this.txtKeyCertGIIN.Size = new System.Drawing.Size(173, 20);
-            this.txtKeyCertGIIN.TabIndex = 36;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(269, 215);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(127, 13);
-            this.label4.TabIndex = 35;
-            this.label4.Text = "Option 2 Jurisdiction GIIN";
-            // 
-            // btnBrowseKeyCert2
-            // 
-            this.btnBrowseKeyCert2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBrowseKeyCert2.Location = new System.Drawing.Point(451, 185);
-            this.btnBrowseKeyCert2.Name = "btnBrowseKeyCert2";
-            this.btnBrowseKeyCert2.Size = new System.Drawing.Size(28, 23);
-            this.btnBrowseKeyCert2.TabIndex = 34;
-            this.btnBrowseKeyCert2.Text = "...";
-            this.btnBrowseKeyCert2.UseVisualStyleBackColor = true;
-            this.btnBrowseKeyCert2.Click += new System.EventHandler(this.btnBrowseKeyCert2_Click);
+
+            //Sovos start
             // 
             // txtKeyCert2
             // 
@@ -429,50 +385,100 @@
             this.txtKeyCert2.Size = new System.Drawing.Size(173, 20);
             this.txtKeyCert2.TabIndex = 33;
             // 
-            // label5
+            // txtKeyCertGIIN
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(269, 169);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(155, 13);
-            this.label5.TabIndex = 32;
-            this.label5.Text = "Option 2 Jurisdiction Public Key";
+            this.txtKeyCertGIIN.Location = new System.Drawing.Point(269, 231);
+            this.txtKeyCertGIIN.Name = "txtKeyCertGIIN";
+            this.txtKeyCertGIIN.Size = new System.Drawing.Size(173, 20);
+            this.txtKeyCertGIIN.TabIndex = 36;
+
+            //Sovos end
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 7);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(135, 26);
-            this.label6.TabIndex = 37;
-            this.label6.Text = "Complete below for Model1\r\nOption 2 countries";
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Location = new System.Drawing.Point(259, 118);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(231, 160);
-            this.panel1.TabIndex = 38;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(272, 60);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(50, 13);
-            this.label7.TabIndex = 39;
-            this.label7.Text = "Tax Year";
-            // 
-            // cbTaxYear
-            // 
-            this.cbTaxYear.FormattingEnabled = true;
-            this.cbTaxYear.Location = new System.Drawing.Point(272, 76);
-            this.cbTaxYear.Name = "cbTaxYear";
-            this.cbTaxYear.Size = new System.Drawing.Size(170, 21);
-            this.cbTaxYear.TabIndex = 41;
-*/
+            /*sm convey
+                        // label1
+                        // 
+                        this.label1.AutoSize = true;
+                        this.label1.Location = new System.Drawing.Point(20, 9);
+                        this.label1.Name = "label1";
+                        this.label1.Size = new System.Drawing.Size(130, 13);
+                        this.label1.TabIndex = 30;
+                        this.label1.Text = "Create a Transmission File";
+                        // 
+                        // label2
+                        // 
+                        this.label2.AutoSize = true;
+                        this.label2.Location = new System.Drawing.Point(508, 9);
+                        this.label2.Name = "label2";
+                        this.label2.Size = new System.Drawing.Size(123, 13);
+                        this.label2.TabIndex = 31;
+                        this.label2.Text = "Decrypting a Notification";
+                        
+                        // 
+                        // label4
+                        // 
+                        this.label4.AutoSize = true;
+                        this.label4.Location = new System.Drawing.Point(269, 215);
+                        this.label4.Name = "label4";
+                        this.label4.Size = new System.Drawing.Size(127, 13);
+                        this.label4.TabIndex = 35;
+                        this.label4.Text = "Option 2 Jurisdiction GIIN";
+                        // 
+                        // btnBrowseKeyCert2
+                        // 
+                        this.btnBrowseKeyCert2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                        this.btnBrowseKeyCert2.Location = new System.Drawing.Point(451, 185);
+                        this.btnBrowseKeyCert2.Name = "btnBrowseKeyCert2";
+                        this.btnBrowseKeyCert2.Size = new System.Drawing.Size(28, 23);
+                        this.btnBrowseKeyCert2.TabIndex = 34;
+                        this.btnBrowseKeyCert2.Text = "...";
+                        this.btnBrowseKeyCert2.UseVisualStyleBackColor = true;
+                        this.btnBrowseKeyCert2.Click += new System.EventHandler(this.btnBrowseKeyCert2_Click);
+
+                        // 
+                        // label5
+                        // 
+                        this.label5.AutoSize = true;
+                        this.label5.Location = new System.Drawing.Point(269, 169);
+                        this.label5.Name = "label5";
+                        this.label5.Size = new System.Drawing.Size(155, 13);
+                        this.label5.TabIndex = 32;
+                        this.label5.Text = "Option 2 Jurisdiction Public Key";
+                        // 
+                        // label6
+                        // 
+                        this.label6.AutoSize = true;
+                        this.label6.Location = new System.Drawing.Point(6, 7);
+                        this.label6.Name = "label6";
+                        this.label6.Size = new System.Drawing.Size(135, 26);
+                        this.label6.TabIndex = 37;
+                        this.label6.Text = "Complete below for Model1\r\nOption 2 countries";
+                        // 
+                        // panel1
+                        // 
+                        this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+                        this.panel1.Controls.Add(this.label6);
+                        this.panel1.Location = new System.Drawing.Point(259, 118);
+                        this.panel1.Name = "panel1";
+                        this.panel1.Size = new System.Drawing.Size(231, 160);
+                        this.panel1.TabIndex = 38;
+                        // 
+                        // label7
+                        // 
+                        this.label7.AutoSize = true;
+                        this.label7.Location = new System.Drawing.Point(272, 60);
+                        this.label7.Name = "label7";
+                        this.label7.Size = new System.Drawing.Size(50, 13);
+                        this.label7.TabIndex = 39;
+                        this.label7.Text = "Tax Year";
+                        // 
+                        // cbTaxYear
+                        // 
+                        this.cbTaxYear.FormattingEnabled = true;
+                        this.cbTaxYear.Location = new System.Drawing.Point(272, 76);
+                        this.cbTaxYear.Name = "cbTaxYear";
+                        this.cbTaxYear.Size = new System.Drawing.Size(170, 21);
+                        this.cbTaxYear.TabIndex = 41;
+            */
             // chkM1O2
             // 
             this.chkM1O2.AutoSize = true;
@@ -645,11 +651,9 @@
             this.Controls.Add(this.btnBrowseXml);
             this.Controls.Add(this.txtXmlFile);
             this.Controls.Add(this.lblLoadXML);
-            this.Controls.Add(this.panel1);
+            //this.Controls.Add(this.panel1);
             this.Name = "MainForm";
             this.Text = "IDES Data Preparation";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -687,21 +691,25 @@
         private System.Windows.Forms.OpenFileDialog dlgOpen;
         private System.Windows.Forms.SaveFileDialog dlgSave;
         private System.Windows.Forms.FolderBrowserDialog dlgOpenFolder;
-/*sm convey
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtKeyCertGIIN;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnBrowseKeyCert2;
+        //Sovos start
         private System.Windows.Forms.TextBox txtKeyCert2;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox cbTaxYear;
-        private System.Windows.Forms.RadioButton radCBC;
-        private System.Windows.Forms.RadioButton radECB;
-*/
+        private System.Windows.Forms.TextBox txtKeyCertGIIN;
+        //Sovos end
+        /*sm convey
+                private System.Windows.Forms.Label label1;
+                private System.Windows.Forms.Label label2;
+                
+                private System.Windows.Forms.Label label4;
+                private System.Windows.Forms.Button btnBrowseKeyCert2;
+
+                private System.Windows.Forms.Label label5;
+                private System.Windows.Forms.Label label6;
+                private System.Windows.Forms.Panel panel1;
+                private System.Windows.Forms.Label label7;
+                private System.Windows.Forms.ComboBox cbTaxYear;
+                private System.Windows.Forms.RadioButton radCBC;
+                private System.Windows.Forms.RadioButton radECB;
+        */
         private System.Windows.Forms.CheckBox chkM1O2;
         private System.Windows.Forms.Button btnBrowseHCTACert;
         private System.Windows.Forms.TextBox txtHCTACert;
