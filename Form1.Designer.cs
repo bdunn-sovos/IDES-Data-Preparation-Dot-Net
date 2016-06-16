@@ -51,16 +51,19 @@
             this.txtRecKeyPassword = new System.Windows.Forms.TextBox();
             this.lblRecPass = new System.Windows.Forms.Label();
             this.btnDecryptZip = new System.Windows.Forms.Button();
+/*sm convey
             this.txtSenderCode = new System.Windows.Forms.TextBox();
             this.lblSender = new System.Windows.Forms.Label();
             this.txtReceiverCode = new System.Windows.Forms.TextBox();
             this.lblReceiver = new System.Windows.Forms.Label();
+*/
             this.btnBrowseOutput = new System.Windows.Forms.Button();
             this.txtNotificationFolder = new System.Windows.Forms.TextBox();
             this.lblOutput = new System.Windows.Forms.Label();
             this.dlgOpen = new System.Windows.Forms.OpenFileDialog();
             this.dlgSave = new System.Windows.Forms.SaveFileDialog();
             this.dlgOpenFolder = new System.Windows.Forms.FolderBrowserDialog();
+/*sm convey
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtKeyCertGIIN = new System.Windows.Forms.TextBox();
@@ -75,6 +78,19 @@
             this.radCBC = new System.Windows.Forms.RadioButton();
             this.radECB = new System.Windows.Forms.RadioButton();
             this.panel1.SuspendLayout();
+*/
+            this.chkM1O2 = new System.Windows.Forms.CheckBox();
+            this.btnBrowseHCTACert = new System.Windows.Forms.Button();
+            this.txtHCTACert = new System.Windows.Forms.TextBox();
+            this.lblHCTAKey = new System.Windows.Forms.Label();
+            this.txtHCTACertPassword = new System.Windows.Forms.TextBox();
+            this.lblEncryptionHCTAPassword = new System.Windows.Forms.Label();
+            this.txtHCTACode = new System.Windows.Forms.TextBox();
+            this.lblHCTACode = new System.Windows.Forms.Label();
+            this.lblTaxYear = new System.Windows.Forms.Label();
+            this.cmbTaxYear = new System.Windows.Forms.ComboBox();
+            this.radECB = new System.Windows.Forms.RadioButton();
+            this.radCBC = new System.Windows.Forms.RadioButton();
             this.SuspendLayout();
             // 
             // lblLoadXML
@@ -173,7 +189,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(81, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "IRS Public Key)";
+            this.label3.Text = "Encryption Key Certificate (Receiver\'s Public Key)";
             // 
             // txtKeyCertPassword
             // 
@@ -189,7 +205,7 @@
             this.lblKeyEncryptionCertPassword.Name = "lblKeyEncryptionCertPassword";
             this.lblKeyEncryptionCertPassword.Size = new System.Drawing.Size(200, 13);
             this.lblKeyEncryptionCertPassword.TabIndex = 11;
-            this.lblKeyEncryptionCertPassword.Text = "IRS  Key Certificate password (if needed)";
+            this.lblKeyEncryptionCertPassword.Text = "Encryption Key Certificate password (if needed)";
             // 
             // btnSignXML
             // 
@@ -274,7 +290,7 @@
             // 
             // btnDecryptZip
             // 
-            this.btnDecryptZip.Location = new System.Drawing.Point(508, 170);
+            this.btnDecryptZip.Location = new System.Drawing.Point(397, 218);
             this.btnDecryptZip.Name = "btnDecryptZip";
             this.btnDecryptZip.Size = new System.Drawing.Size(173, 23);
             this.btnDecryptZip.TabIndex = 22;
@@ -282,6 +298,7 @@
             this.btnDecryptZip.UseVisualStyleBackColor = true;
             this.btnDecryptZip.Click += new System.EventHandler(this.btnDecryptZip_Click);
             // 
+/*sm convey
             // txtSenderCode
             // 
             this.txtSenderCode.Location = new System.Drawing.Point(508, 212);
@@ -318,6 +335,11 @@
             // 
             this.btnBrowseOutput.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnBrowseOutput.Location = new System.Drawing.Point(688, 258);
+*/
+            // btnBrowseOutput
+            // 
+            this.btnBrowseOutput.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBrowseOutput.Location = new System.Drawing.Point(579, 175);
             this.btnBrowseOutput.Name = "btnBrowseOutput";
             this.btnBrowseOutput.Size = new System.Drawing.Size(29, 23);
             this.btnBrowseOutput.TabIndex = 29;
@@ -327,7 +349,7 @@
             // 
             // txtNotificationFolder
             // 
-            this.txtNotificationFolder.Location = new System.Drawing.Point(508, 258);
+            this.txtNotificationFolder.Location = new System.Drawing.Point(397, 175);
             this.txtNotificationFolder.Name = "txtNotificationFolder";
             this.txtNotificationFolder.Size = new System.Drawing.Size(173, 20);
             this.txtNotificationFolder.TabIndex = 28;
@@ -335,7 +357,7 @@
             // lblOutput
             // 
             this.lblOutput.AutoSize = true;
-            this.lblOutput.Location = new System.Drawing.Point(508, 242);
+            this.lblOutput.Location = new System.Drawing.Point(397, 159);
             this.lblOutput.Name = "lblOutput";
             this.lblOutput.Size = new System.Drawing.Size(127, 13);
             this.lblOutput.TabIndex = 27;
@@ -354,6 +376,7 @@
             // 
             this.dlgOpenFolder.RootFolder = System.Environment.SpecialFolder.MyComputer;
             // 
+/*sm convey
             // label1
             // 
             this.label1.AutoSize = true;
@@ -449,33 +472,127 @@
             this.cbTaxYear.Name = "cbTaxYear";
             this.cbTaxYear.Size = new System.Drawing.Size(170, 21);
             this.cbTaxYear.TabIndex = 41;
+*/
+            // chkM1O2
+            // 
+            this.chkM1O2.AutoSize = true;
+            this.chkM1O2.Location = new System.Drawing.Point(676, 69);
+            this.chkM1O2.Name = "chkM1O2";
+            this.chkM1O2.Size = new System.Drawing.Size(93, 17);
+            this.chkM1O2.TabIndex = 30;
+            this.chkM1O2.Text = "Model 1 Opt 2";
+            this.chkM1O2.UseVisualStyleBackColor = true;
+            this.chkM1O2.CheckedChanged += new System.EventHandler(this.chkM1O2_CheckedChanged);
+            // 
+            // btnBrowseHCTACert
+            // 
+            this.btnBrowseHCTACert.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnBrowseHCTACert.Location = new System.Drawing.Point(197, 304);
+            this.btnBrowseHCTACert.Name = "btnBrowseHCTACert";
+            this.btnBrowseHCTACert.Size = new System.Drawing.Size(28, 23);
+            this.btnBrowseHCTACert.TabIndex = 33;
+            this.btnBrowseHCTACert.Text = "...";
+            this.btnBrowseHCTACert.UseVisualStyleBackColor = true;
+            this.btnBrowseHCTACert.Visible = false;
+            this.btnBrowseHCTACert.Click += new System.EventHandler(this.btnBrowseHCTACert_Click);
+            // 
+            // txtHCTACert
+            // 
+            this.txtHCTACert.Location = new System.Drawing.Point(15, 304);
+            this.txtHCTACert.Name = "txtHCTACert";
+            this.txtHCTACert.Size = new System.Drawing.Size(173, 20);
+            this.txtHCTACert.TabIndex = 32;
+            this.txtHCTACert.Visible = false;
+            // 
+            // lblHCTAKey
+            // 
+            this.lblHCTAKey.AutoSize = true;
+            this.lblHCTAKey.Location = new System.Drawing.Point(15, 288);
+            this.lblHCTAKey.Name = "lblHCTAKey";
+            this.lblHCTAKey.Size = new System.Drawing.Size(219, 13);
+            this.lblHCTAKey.TabIndex = 31;
+            this.lblHCTAKey.Text = "Encryption Key Certificate (HCTA Public Key)";
+            this.lblHCTAKey.Visible = false;
+            // 
+            // txtHCTACertPassword
+            // 
+            this.txtHCTACertPassword.Location = new System.Drawing.Point(15, 345);
+            this.txtHCTACertPassword.Name = "txtHCTACertPassword";
+            this.txtHCTACertPassword.Size = new System.Drawing.Size(173, 20);
+            this.txtHCTACertPassword.TabIndex = 35;
+            this.txtHCTACertPassword.Visible = false;
+            // 
+            // lblEncryptionHCTAPassword
+            // 
+            this.lblEncryptionHCTAPassword.AutoSize = true;
+            this.lblEncryptionHCTAPassword.Location = new System.Drawing.Point(15, 329);
+            this.lblEncryptionHCTAPassword.Name = "lblEncryptionHCTAPassword";
+            this.lblEncryptionHCTAPassword.Size = new System.Drawing.Size(261, 13);
+            this.lblEncryptionHCTAPassword.TabIndex = 34;
+            this.lblEncryptionHCTAPassword.Text = "Encryption Key Certificate HCTA password (if needed)";
+            this.lblEncryptionHCTAPassword.Visible = false;
+            // 
+            // txtHCTACode
+            // 
+            this.txtHCTACode.Location = new System.Drawing.Point(15, 388);
+            this.txtHCTACode.Name = "txtHCTACode";
+            this.txtHCTACode.Size = new System.Drawing.Size(78, 20);
+            this.txtHCTACode.TabIndex = 37;
+            // 
+            // lblHCTACode
+            // 
+            this.lblHCTACode.AutoSize = true;
+            this.lblHCTACode.Location = new System.Drawing.Point(15, 372);
+            this.lblHCTACode.Name = "lblHCTACode";
+            this.lblHCTACode.Size = new System.Drawing.Size(64, 13);
+            this.lblHCTACode.TabIndex = 36;
+            this.lblHCTACode.Text = "HCTA Code";
+            // 
+            // lblTaxYear
+            // 
+            this.lblTaxYear.AutoSize = true;
+            this.lblTaxYear.Location = new System.Drawing.Point(673, 94);
+            this.lblTaxYear.Name = "lblTaxYear";
+            this.lblTaxYear.Size = new System.Drawing.Size(50, 13);
+            this.lblTaxYear.TabIndex = 38;
+            this.lblTaxYear.Text = "Tax Year";
+            // 
+            // cmbTaxYear
+            // 
+            this.cmbTaxYear.FormattingEnabled = true;
+            this.cmbTaxYear.Location = new System.Drawing.Point(676, 112);
+            this.cmbTaxYear.Name = "cmbTaxYear";
+            this.cmbTaxYear.Size = new System.Drawing.Size(78, 21);
+            this.cmbTaxYear.TabIndex = 39;
+            this.cmbTaxYear.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
+            // radECB
+            // 
+            this.radECB.AutoSize = true;
+            this.radECB.Location = new System.Drawing.Point(676, 39);
+            this.radECB.Name = "radECB";
+            this.radECB.Size = new System.Drawing.Size(76, 17);
+            this.radECB.TabIndex = 42;
+            this.radECB.Text = "ECB Mode";
+            this.radECB.UseVisualStyleBackColor = true;
             // 
             // radCBC
             // 
             this.radCBC.AutoSize = true;
             this.radCBC.Checked = true;
-            this.radCBC.Location = new System.Drawing.Point(275, 12);
+            this.radCBC.Location = new System.Drawing.Point(676, 19);
             this.radCBC.Name = "radCBC";
             this.radCBC.Size = new System.Drawing.Size(76, 17);
-            this.radCBC.TabIndex = 46;
+            this.radCBC.TabIndex = 44;
             this.radCBC.TabStop = true;
             this.radCBC.Text = "CBC Mode";
             this.radCBC.UseVisualStyleBackColor = true;
-            // 
-            // radECB
-            // 
-            this.radECB.AutoSize = true;
-            this.radECB.Location = new System.Drawing.Point(275, 32);
-            this.radECB.Name = "radECB";
-            this.radECB.Size = new System.Drawing.Size(76, 17);
-            this.radECB.TabIndex = 45;
-            this.radECB.Text = "ECB Mode";
-            this.radECB.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+/*sm convey
             this.ClientSize = new System.Drawing.Size(730, 292);
             this.Controls.Add(this.radCBC);
             this.Controls.Add(this.radECB);
@@ -488,13 +605,23 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+*/
+            this.ClientSize = new System.Drawing.Size(791, 427);
+            this.Controls.Add(this.radCBC);
+            this.Controls.Add(this.radECB);
+            this.Controls.Add(this.cmbTaxYear);
+            this.Controls.Add(this.lblTaxYear);
+            this.Controls.Add(this.txtHCTACode);
+            this.Controls.Add(this.lblHCTACode);
+            this.Controls.Add(this.txtHCTACertPassword);
+            this.Controls.Add(this.lblEncryptionHCTAPassword);
+            this.Controls.Add(this.btnBrowseHCTACert);
+            this.Controls.Add(this.txtHCTACert);
+            this.Controls.Add(this.lblHCTAKey);
+            this.Controls.Add(this.chkM1O2);
             this.Controls.Add(this.btnBrowseOutput);
             this.Controls.Add(this.txtNotificationFolder);
             this.Controls.Add(this.lblOutput);
-            this.Controls.Add(this.txtReceiverCode);
-            this.Controls.Add(this.lblReceiver);
-            this.Controls.Add(this.txtSenderCode);
-            this.Controls.Add(this.lblSender);
             this.Controls.Add(this.btnDecryptZip);
             this.Controls.Add(this.txtRecKeyPassword);
             this.Controls.Add(this.lblRecPass);
@@ -521,9 +648,9 @@
             this.Controls.Add(this.panel1);
             this.Name = "MainForm";
             this.Text = "IDES Data Preparation";
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -554,16 +681,13 @@
         private System.Windows.Forms.TextBox txtRecKeyPassword;
         private System.Windows.Forms.Label lblRecPass;
         private System.Windows.Forms.Button btnDecryptZip;
-        private System.Windows.Forms.TextBox txtSenderCode;
-        private System.Windows.Forms.Label lblSender;
-        private System.Windows.Forms.TextBox txtReceiverCode;
-        private System.Windows.Forms.Label lblReceiver;
         private System.Windows.Forms.Button btnBrowseOutput;
         private System.Windows.Forms.TextBox txtNotificationFolder;
         private System.Windows.Forms.Label lblOutput;
         private System.Windows.Forms.OpenFileDialog dlgOpen;
         private System.Windows.Forms.SaveFileDialog dlgSave;
         private System.Windows.Forms.FolderBrowserDialog dlgOpenFolder;
+/*sm convey
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtKeyCertGIIN;
@@ -577,6 +701,19 @@
         private System.Windows.Forms.ComboBox cbTaxYear;
         private System.Windows.Forms.RadioButton radCBC;
         private System.Windows.Forms.RadioButton radECB;
+*/
+        private System.Windows.Forms.CheckBox chkM1O2;
+        private System.Windows.Forms.Button btnBrowseHCTACert;
+        private System.Windows.Forms.TextBox txtHCTACert;
+        private System.Windows.Forms.Label lblHCTAKey;
+        private System.Windows.Forms.TextBox txtHCTACertPassword;
+        private System.Windows.Forms.Label lblEncryptionHCTAPassword;
+        private System.Windows.Forms.TextBox txtHCTACode;
+        private System.Windows.Forms.Label lblHCTACode;
+        private System.Windows.Forms.Label lblTaxYear;
+        private System.Windows.Forms.ComboBox cmbTaxYear;
+        private System.Windows.Forms.RadioButton radECB;
+        private System.Windows.Forms.RadioButton radCBC;
     }
 }
 

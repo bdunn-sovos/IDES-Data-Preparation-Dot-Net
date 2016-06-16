@@ -5,6 +5,7 @@ using System.Xml;
 using System.Text;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Drawing;
 using System.Linq;
 
 
@@ -14,14 +15,7 @@ namespace WindowsFormsApplication1
     {
         public MainForm()
         {
-            InitializeComponent();
-            int year = DateTime.Now.Year;
-            for (int i = 2014; i <= year; i++)
-            {
-                cbTaxYear.Items.Add(i.ToString());
-            }
-            year--;
-            cbTaxYear.Text = year.ToString();
+            InitializeComponent();            
         }
 
         
@@ -35,13 +29,13 @@ namespace WindowsFormsApplication1
         private void btnBrowseCert_Click(object sender, EventArgs e)
         {
             // load certificate
-            txtCert.Text = dlgOpen.ShowDialogWithFilter("Signing Certificates (*.pfx, *.p12)|*.pfx;*.p12");
+            txtCert.Text = dlgOpen.ShowDialogWithFilter("Signing Certificates (*.pfx, *.p12)|*.pfx;*.p12;");
         }
 
         private void btnBrowseKeyCert_Click(object sender, EventArgs e)
         {
             // load AES key encryption certificate
-            txtKeyCert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
+            txtKeyCert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12;");
         }
 
         private void btnSignXML_Click(object sender, EventArgs e)
@@ -74,6 +68,7 @@ namespace WindowsFormsApplication1
                 return;
             }
 
+            /* SM: convey code
             bool Secondary = !(string.IsNullOrWhiteSpace(txtKeyCert2.Text));
             if (Secondary)
             {
@@ -83,7 +78,7 @@ namespace WindowsFormsApplication1
                     MessageBox.Show("Secondary reciver was not specified!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-            }
+            } */
 
             try
             {
@@ -110,14 +105,12 @@ namespace WindowsFormsApplication1
 
                 // encrypt file & save to disk
                 string encryptedFileName = zipFileName.Replace(".zip", "");
-                string encryptedFileName2 = encryptedFileName;
+                // SM: convey string encryptedFileName2 = encryptedFileName;
+                string encryptedHCTAFileName = zipFileName.Replace(".zip", "");
                 string payloadFileName = encryptedFileName;
                 AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector, radECB.Checked);
 
-                // encrypt key with public key of certificate & save to disk
-                // System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-                //aesEncryptionKey = encoding.GetBytes("test");
-
+/* SM convey
                 //  Byte[] bytes = System.Text.Encoder.GetBytes("some test data");
                 encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key";
                 AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName, radECB.Checked);
@@ -126,6 +119,14 @@ namespace WindowsFormsApplication1
                 {
                     encryptedFileName2 = Path.GetDirectoryName(zipFileName) + "\\" + txtKeyCertGIIN.Text + "_Key";
                     AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert2.Text, null, encryptedFileName2, radECB.Checked);
+}*/
+                // encrypt key with public key of certificate & save to disk
+                encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key";
+                AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName, radECB.Checked);
+                //For Model1 Option2 Only, encrypt the AES Key with the HCTA Public Key
+                if (chkM1O2.Checked) {
+                    encryptedHCTAFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA." + txtHCTACode.Text + "_Key";
+                    AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtHCTACert.Text, txtHCTACertPassword.Text, encryptedHCTAFileName, radECB.Checked);
                 }
 
                 // cleanup
@@ -171,24 +172,23 @@ namespace WindowsFormsApplication1
                         writer.WriteString("000000.00000.TA.840");
                     }
                     writer.WriteEndElement();
-                    /*not sure if needed, can't find any instructions
-                                        if (Secondary)
-                                        {
-                                            writer.WriteStartElement("HCTAFATCAEntityId");
-                                            writer.WriteString(txtKeyCertGIIN.Text);
-                                            writer.WriteEndElement();
-                                        }*/
                     writer.WriteStartElement("FATCAEntCommunicationTypeCd");
                     writer.WriteString("RPT");
                     writer.WriteEndElement();
                     writer.WriteStartElement("SenderFileId");
                     writer.WriteString(senderFile);
                     writer.WriteEndElement();
+                    writer.WriteStartElement("FileFormatCd");
+                    writer.WriteString("XML");
+                    writer.WriteEndElement();
+                    writer.WriteStartElement("BinaryEncodingSchemeCd");
+                    writer.WriteString("NONE");
+                    writer.WriteEndElement();
                     writer.WriteStartElement("FileCreateTs");
                     writer.WriteString(fileCreationDateTime);
                     writer.WriteEndElement();
                     writer.WriteStartElement("TaxYear");
-                    writer.WriteString(cbTaxYear.Text);
+                    writer.WriteString(cmbTaxYear.SelectedItem.ToString());
                     writer.WriteEndElement();
                     writer.WriteStartElement("FileRevisionInd");
                     writer.WriteString("false");
@@ -203,11 +203,16 @@ namespace WindowsFormsApplication1
                     // add enveloping signature to ZIP file
                     ZipManager.CreateArchive(metadataFileName, filePath + "\\" + senderFile + ".zip");
                     ZipManager.UpdateArchive(encryptedFileName, filePath + "\\" + senderFile + ".zip");
-                    if (Secondary)
+                    /*SM convey if (Secondary)
                     {
                         ZipManager.UpdateArchive(encryptedFileName2, filePath + "\\" + senderFile + ".zip");
-                    }
+                    }*/
                     ZipManager.UpdateArchive(payloadFileName, filePath + "\\" + senderFile + ".zip");
+                    //Add the HCTA Key file for a M1O2 packet
+                    if (chkM1O2.Checked)
+                    {
+                        ZipManager.UpdateArchive(encryptedHCTAFileName, filePath + "\\" + senderFile + ".zip");
+                    }
 
                     // success
                     MessageBox.Show("XML Signing and Encryption process is complete!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -266,9 +271,11 @@ namespace WindowsFormsApplication1
             // select encrypted key file
             string encryptedKeyFile = "";
             string encryptedPayloadFile = "";
+            string metadataFile = "";
             string[] keyFiles = Directory.GetFiles(zipFolder, "*_Key", SearchOption.TopDirectoryOnly);
             string[] payloadFiles = Directory.GetFiles(zipFolder, "*_Payload", SearchOption.TopDirectoryOnly);
-
+            string[] metadataFiles = Directory.GetFiles(zipFolder, "*_Metadata*", SearchOption.TopDirectoryOnly);
+            
             if (keyFiles.Length == 0)
             {
                 // key file validation
@@ -283,7 +290,10 @@ namespace WindowsFormsApplication1
             }
             encryptedKeyFile = keyFiles[0];
             encryptedPayloadFile = payloadFiles[0];
+            metadataFile = metadataFiles[0];
 
+            //Check the metadata and see what we have
+            string metadataContentType = XmlManager.CheckMetadataType(metadataFile);
 
 
             byte[] encryptedAesKey = null;
@@ -311,8 +321,32 @@ namespace WindowsFormsApplication1
 
                 //Deflate the decrypted zip archive
                 ZipManager.ExtractArchive(decryptedFileName, decryptedFileName, false);
+                string decryptedPayload = decryptedFileName.Replace("_Payload_decrypted.zip", "_Payload.xml");
+                //If the metadata is something other than XML, read the wrapper and rebuild the non-XML file
 
+                if (metadataContentType != "XML")
+                {
+                    //Some non-XML files may not have _Payload in the file name, if not remove it   
+                    if (!File.Exists(decryptedPayload))
+                    {
+                        decryptedPayload = decryptedPayload.Replace("_Payload.xml", ".xml");
+                    }
 
+                    //This will give us the base64 encoded data from the XML file    
+
+                    string encodedData = XmlManager.ExtractXMLImageData(decryptedPayload);
+
+                    //We will convert the base64 data back to bytes
+                    byte[] binaryData;
+                    string decodedPayload = decryptedPayload.Replace(".xml", "." + metadataContentType);
+                    binaryData = System.Convert.FromBase64String(encodedData);
+
+                    //We can write the bytes back to rebuild the file
+                    FileStream decodedFile;
+                    decodedFile = new FileStream(decodedPayload, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+                    decodedFile.Write(binaryData, 0, binaryData.Length);
+                    decodedFile.Close();
+                }
 
                 // success
                 MessageBox.Show("Notification decryption process is complete!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -349,22 +383,145 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
+/*SM convey
         private void btnBrowseKeyCert2_Click(object sender, EventArgs e)
         {
             txtKeyCert2.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
         }
+/*
 
-     
+        private void chkM1O2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkM1O2.Checked)
+            {
+                this.lblHCTAKey.Location = new Point(
+                this.lblHCTAKey.Location.X,
+                this.lblHCTAKey.Location.Y - 40
+                );
+                this.btnBrowseHCTACert.Location = new Point(
+                this.btnBrowseHCTACert.Location.X,
+                this.btnBrowseHCTACert.Location.Y - 40
+                );
+                this.txtHCTACert.Location = new Point(
+                this.txtHCTACert.Location.X,
+                this.txtHCTACert.Location.Y - 40
+                );
+                this.lblEncryptionHCTAPassword.Location = new Point(
+                this.lblEncryptionHCTAPassword.Location.X,
+                this.lblEncryptionHCTAPassword.Location.Y - 40
+                );
+                this.txtHCTACertPassword.Location = new Point(
+                this.txtHCTACertPassword.Location.X,
+                this.txtHCTACertPassword.Location.Y - 40
+                );
+                this.lblHCTACode.Location = new Point(
+                this.lblHCTACode.Location.X,
+                this.lblHCTACode.Location.Y - 40
+                );
+                this.txtHCTACode.Location = new Point(
+                this.txtHCTACode.Location.X,
+                this.txtHCTACode.Location.Y - 40
+                );
+                this.btnSignXML.Location = new Point(
+                this.btnSignXML.Location.X,
+                this.btnSignXML.Location.Y + 140
+                );
+                
 
+                lblHCTAKey.Visible = true;
+                txtHCTACert.Visible = true;
+                btnBrowseHCTACert.Visible = true;
+                lblEncryptionHCTAPassword.Visible = true;
+                txtHCTACertPassword.Visible = true;
+                lblHCTACode.Visible = true;
+                txtHCTACode.Visible = true;
+            }
+            else
+            {
+                this.lblHCTAKey.Location = new Point(
+                this.lblHCTAKey.Location.X,
+                this.lblHCTAKey.Location.Y + 40
+                );
+                this.btnBrowseHCTACert.Location = new Point(
+                this.btnBrowseHCTACert.Location.X,
+                this.btnBrowseHCTACert.Location.Y + 40
+                );
+                this.txtHCTACert.Location = new Point(
+                this.txtHCTACert.Location.X,
+                this.txtHCTACert.Location.Y + 40
+                );
+                this.lblEncryptionHCTAPassword.Location = new Point(
+                this.lblEncryptionHCTAPassword.Location.X,
+                this.lblEncryptionHCTAPassword.Location.Y + 40
+                );
+                this.txtHCTACertPassword.Location = new Point(
+                this.txtHCTACertPassword.Location.X,
+                this.txtHCTACertPassword.Location.Y + 40
+                );
+                this.lblHCTACode.Location = new Point(
+                this.lblHCTACode.Location.X,
+                this.lblHCTACode.Location.Y + 40
+                );
+                this.txtHCTACode.Location = new Point(
+                this.txtHCTACode.Location.X,
+                this.txtHCTACode.Location.Y + 40
+                );
+                this.btnSignXML.Location = new Point(
+                this.btnSignXML.Location.X,
+                this.btnSignXML.Location.Y - 140
+                );
+
+                lblHCTAKey.Visible = false;
+                txtHCTACert.Visible = false;
+                btnBrowseHCTACert.Visible = false;
+                lblEncryptionHCTAPassword.Visible = false;
+                txtHCTACertPassword.Visible = false;
+                lblHCTACode.Visible = false;
+                txtHCTACode.Visible = false;
+            }
+        }
+
+
+        private void btnBrowseHCTACert_Click(object sender, EventArgs e)
+        {
+            // load AES key encryption certificate
+            txtHCTACert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
       
-     
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {			
+            lblHCTAKey.Visible = false;
+            txtHCTACert.Visible = false;
+            btnBrowseHCTACert.Visible = false;
+            lblEncryptionHCTAPassword.Visible = false;
+            txtHCTACertPassword.Visible = false;
+            lblHCTACode.Visible = false;
+            txtHCTACode.Visible = false;
+
+            //Populate tax year combo box
+            int year = DateTime.Now.Year;
+            for (int i = 2014; i <= year; i++)
+            {
+                cmbTaxYear.Items.Add(i.ToString());
+            }
+            year--;
+            cmbTaxYear.SelectedItem = year.ToString();
+        
+            //Default the CBC checkbox to on
+            radCBC.Checked = true;
+            
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
 
        
+
+       
+
 
        
     }
