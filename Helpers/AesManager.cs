@@ -51,6 +51,7 @@ namespace WindowsFormsApplication1
         /// <param name="filePath">Full path of the file to be encrypted</param>
         /// <param name="outputFilePath">Full path of the encrypted file</param>
         /// <param name="key">AES encryption key</param>
+        /// <param name="iv">AES initialization vector</param>
         /// <param name="useECBMode">boolean to determine if ECB or CBC mode is used</param>
         public static void EncryptFile(string filePath, string outputFilePath, byte[] key, byte[] iv, bool useECBMode)
         {
@@ -60,7 +61,7 @@ namespace WindowsFormsApplication1
                     aes.Mode = CipherMode.ECB;
                 else
                     aes.Mode = CipherMode.CBC;
-                
+
                 aes.Key = key;
                 aes.IV = iv;
 
