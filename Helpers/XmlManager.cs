@@ -210,7 +210,7 @@ namespace WindowsFormsApplication1
                 
                 // create new XmlDocument from stream
                 XmlDocument doc = new XmlDocument() { PreserveWhitespace = true };
-                doc.Load(stream);
+                doc.LoadXml(xmlAsStr);
 
                 // craete transform (for canonicalization method & reference)
                 XmlDsigExcC14NTransform transform = new XmlDsigExcC14NTransform();
