@@ -200,7 +200,14 @@ namespace WindowsFormsApplication1
                 // go to the beginning of the stream
                 stream.Flush();
                 stream.Position = 0;
-
+                
+                string xmlAsStr;
+                using (var sr = new StreamReader(stream))
+                {
+                    xmlAsStr = sr.ReadToEnd();
+                    xmlAsStr = xmlAsStr.Replace("&apos;", string.Empty);
+                }
+                
                 // create new XmlDocument from stream
                 XmlDocument doc = new XmlDocument() { PreserveWhitespace = true };
                 doc.Load(stream);
@@ -293,9 +300,16 @@ namespace WindowsFormsApplication1
                 stream.Flush();
                 stream.Position = 0;
 
+                string xmlAsStr;
+                using (var sr = new StreamReader(stream))
+                {
+                    xmlAsStr = sr.ReadToEnd();
+                    xmlAsStr = xmlAsStr.Replace("&apos;", string.Empty);
+                }
+                
                 // create new XmlDocument from stream
                 XmlDocument doc = new XmlDocument() { PreserveWhitespace = true };
-                doc.Load(stream);
+                doc.LoadXml(xmlAsStr);
 
                 // get signature node
                 XmlNodeList nodeList = doc.GetElementsByTagName("Signature");
