@@ -23,19 +23,16 @@ namespace WindowsFormsApplication1
 
         private void btnBrowseXml_Click(object sender, EventArgs e)
         {
-            // load XML
             txtXmlFile.Text = dlgOpen.ShowDialogWithFilter("XML Files (*.xml)|*.xml");
         }
 
         private void btnBrowseCert_Click(object sender, EventArgs e)
         {
-            // load certificate
             txtCert.Text = dlgOpen.ShowDialogWithFilter("Signing Certificates (*.pfx, *.p12)|*.pfx;*.p12");
         }
 
         private void btnBrowseKeyCert_Click(object sender, EventArgs e)
         {
-            // load AES key encryption certificate
             txtKeyCert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
         }
 
@@ -198,10 +195,10 @@ namespace WindowsFormsApplication1
                     // add enveloping signature to ZIP file
                     ZipManager.CreateArchive(metadataFileName, filePath + "\\" + senderFile + ".zip");
                     ZipManager.UpdateArchive(encryptedFileName, filePath + "\\" + senderFile + ".zip");
+
                     if (secondary)
-                    {
                         ZipManager.UpdateArchive(encryptedFileName2, filePath + "\\" + senderFile + ".zip");
-                    }
+
                     ZipManager.UpdateArchive(payloadFileName, filePath + "\\" + senderFile + ".zip");
 
                     MessageBox.Show(Resources.SigningAndEncryptionComplete, Text, MessageBoxButtons.OK,
@@ -313,9 +310,7 @@ namespace WindowsFormsApplication1
         {
             // load AES key encryption certificate
             if (dlgOpenFolder.ShowDialog() == DialogResult.OK)
-            {
                 txtNotificationFolder.Text = dlgOpenFolder.SelectedPath;
-            }
         }
 
         private void MainForm_Load(object sender, EventArgs e)
