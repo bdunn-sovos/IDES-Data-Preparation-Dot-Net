@@ -2,11 +2,8 @@
 using System.IO;
 using System.Windows.Forms;
 using System.Xml;
-using System.Text;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Linq;
-
+using Properties;
 
 namespace WindowsFormsApplication1
 {
@@ -15,16 +12,14 @@ namespace WindowsFormsApplication1
         public MainForm()
         {
             InitializeComponent();
-            int year = DateTime.Now.Year;
-            for (int i = 2014; i <= year; i++)
+            var year = DateTime.Now.Year;
+            for (var i = 2014; i <= year; i++)
             {
                 cbTaxYear.Items.Add(i.ToString());
             }
             year--;
             cbTaxYear.Text = year.ToString();
         }
-
-        
 
         private void btnBrowseXml_Click(object sender, EventArgs e)
         {
@@ -48,39 +43,37 @@ namespace WindowsFormsApplication1
         {
             if (string.IsNullOrWhiteSpace(txtXmlFile.Text))
             {
-                // files validation
-                MessageBox.Show("The XML file was not specified!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.XmlFileFieldNotFilled, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(txtCert.Text))
             {
-                // files validation
-                MessageBox.Show("The Signing Certificate was not specified!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.SigningCertFieldNotFilled, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(txtCertPass.Text))
             {
-                // certificate password validation
-                MessageBox.Show("Signing Certificate password was not specified!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.SigningCertPasswordFieldNotFilled, Text, MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(txtKeyCert.Text))
             {
-                // files validation
-                MessageBox.Show("Encryption Certificate was not specified!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.EncryptionCertFieldNotFilled, Text, MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
                 return;
             }
 
-            bool Secondary = !(string.IsNullOrWhiteSpace(txtKeyCert2.Text));
-            if (Secondary)
+            var secondary = !string.IsNullOrWhiteSpace(txtKeyCert2.Text);
+            if (secondary)
             {
                 if (string.IsNullOrWhiteSpace(txtKeyCertGIIN.Text))
                 {
-                    // files validation
-                    MessageBox.Show("Secondary reciver was not specified!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(Resources.SecondaryReceiverFieldNotFilled, Text, MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -88,15 +81,16 @@ namespace WindowsFormsApplication1
             try
             {
                 // load XML file content
-                byte[] xmlContent = File.ReadAllBytes(txtXmlFile.Text);
-                string senderGIIN = Path.GetFileNameWithoutExtension(txtXmlFile.Text);
-                string filePath = Path.GetDirectoryName(txtXmlFile.Text);
+                var xmlContent = File.ReadAllBytes(txtXmlFile.Text);
+                var senderGiin = Path.GetFileNameWithoutExtension(txtXmlFile.Text);
+                var filePath = Path.GetDirectoryName(txtXmlFile.Text);
 
                 // perform sign
-                byte[] envelopingSignature = XmlManager.Sign(XmlSignatureType.Enveloping, xmlContent, txtCert.Text, txtCertPass.Text);
+                var envelopingSignature = XmlManager.Sign(XmlSignatureType.Enveloping, xmlContent, txtCert.Text,
+                    txtCertPass.Text);
 
-                string envelopingFileName = filePath + "\\" + senderGIIN + "_Payload.xml"; //txtXmlFile.Text.Replace(".xml", "_Payload.xml");
-                string zipFileName = envelopingFileName.Replace(".xml", ".zip");
+                var envelopingFileName = filePath + "\\" + senderGiin + "_Payload.xml";
+                var zipFileName = envelopingFileName.Replace(".xml", ".zip");
 
                 // save enveloping version to disk
                 File.WriteAllBytes(envelopingFileName, envelopingSignature);
@@ -105,14 +99,15 @@ namespace WindowsFormsApplication1
                 ZipManager.CreateArchive(envelopingFileName, zipFileName);
 
                 // generate AES key (32 bytes) & default initialization vector (empty)
-                byte[] aesEncryptionKey = AesManager.GenerateRandomKey(AesManager.KeySize / 8);
-                byte[] aesEncryptionVector = AesManager.GenerateRandomKey(16, radECB.Checked);
+                var aesEncryptionKey = AesManager.GenerateRandomKey(AesManager.KeySize/8);
+                var aesEncryptionVector = AesManager.GenerateRandomKey(16, radECB.Checked);
 
                 // encrypt file & save to disk
-                string encryptedFileName = zipFileName.Replace(".zip", "");
-                string encryptedFileName2 = encryptedFileName;
-                string payloadFileName = encryptedFileName;
-                AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector, radECB.Checked);
+                var encryptedFileName = zipFileName.Replace(".zip", string.Empty);
+                var encryptedFileName2 = encryptedFileName;
+                var payloadFileName = encryptedFileName;
+                AesManager.EncryptFile(zipFileName, encryptedFileName, aesEncryptionKey, aesEncryptionVector,
+                    radECB.Checked);
 
                 // encrypt key with public key of certificate & save to disk
                 // System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
@@ -120,12 +115,14 @@ namespace WindowsFormsApplication1
 
                 //  Byte[] bytes = System.Text.Encoder.GetBytes("some test data");
                 encryptedFileName = Path.GetDirectoryName(zipFileName) + "\\000000.00000.TA.840_Key";
-                AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert.Text, txtKeyCertPassword.Text, encryptedFileName, radECB.Checked);
+                AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert.Text, txtKeyCertPassword.Text,
+                    encryptedFileName, radECB.Checked);
 
-                if (Secondary)
+                if (secondary)
                 {
                     encryptedFileName2 = Path.GetDirectoryName(zipFileName) + "\\" + txtKeyCertGIIN.Text + "_Key";
-                    AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert2.Text, null, encryptedFileName2, radECB.Checked);
+                    AesManager.EncryptAesKey(aesEncryptionKey, aesEncryptionVector, txtKeyCert2.Text, null,
+                        encryptedFileName2, radECB.Checked);
                 }
 
                 // cleanup
@@ -134,34 +131,34 @@ namespace WindowsFormsApplication1
 
                 //Start creating XML metadata
                 XmlWriter writer = null;
-                string fileCreationDateTime = "";
-                fileCreationDateTime = DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
-
-                DateTime uDat = new DateTime();
-                uDat = DateTime.UtcNow;
-                string senderFile = uDat.ToString("yyyyMMddTHHmmssfffZ") + "_" + senderGIIN;
+                var fileCreationDateTime = DateTime.Now.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssZ");
+                var senderFile = DateTime.UtcNow.ToString("yyyyMMddTHHmmssfffZ") + "_" + senderGiin;
 
                 try
                 {
-
                     // Create an XmlWriterSettings object with the correct options. 
-                    XmlWriterSettings settings = new XmlWriterSettings();
-                    settings.Indent = true;
-                    settings.IndentChars = ("\t");
-                    settings.OmitXmlDeclaration = false;
-                    settings.NewLineHandling = NewLineHandling.Replace;
-                    settings.CloseOutput = true;
+                    var settings = new XmlWriterSettings
+                    {
+                        Indent = true,
+                        IndentChars = ("\t"),
+                        OmitXmlDeclaration = false,
+                        NewLineHandling = NewLineHandling.Replace,
+                        CloseOutput = true
+                    };
 
-                    string metadataFileName = filePath + "\\" + senderGIIN + "_Metadata.xml";
+                    var metadataFileName = filePath + "\\" + senderGiin + "_Metadata.xml";
 
                     // Create the XmlWriter object and write some content.
                     writer = XmlWriter.Create(metadataFileName, settings);
                     writer.WriteStartElement("FATCAIDESSenderFileMetadata", "urn:fatca:idessenderfilemetadata");
                     writer.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
                     writer.WriteStartElement("FATCAEntitySenderId");
-                    writer.WriteString(senderGIIN);
+                    writer.WriteString(senderGiin);
                     writer.WriteEndElement();
                     writer.WriteStartElement("FATCAEntityReceiverId");
+                    writer.WriteString("000000.00000.TA.840");
+                    /*
+                     * Not entirely sure why this was added but we are having problems sending Singapore. It is setting FATCAEntityReceiverId to Singapore giin and that doesn't work
                     if (Secondary)
                     {
                         writer.WriteString(txtKeyCertGIIN.Text);
@@ -169,7 +166,7 @@ namespace WindowsFormsApplication1
                     else
                     {
                         writer.WriteString("000000.00000.TA.840");
-                    }
+                    }*/
                     writer.WriteEndElement();
                     /*not sure if needed, can't find any instructions
                                         if (Secondary)
@@ -193,35 +190,27 @@ namespace WindowsFormsApplication1
                     writer.WriteStartElement("FileRevisionInd");
                     writer.WriteString("false");
                     writer.WriteEndElement();
-                    //Close the XmlTextWriter.
                     writer.WriteEndDocument();
                     writer.Close();
                     writer.Flush();
-
 
                     //Add the metadata, payload, and key files to the final zip package
                     // add enveloping signature to ZIP file
                     ZipManager.CreateArchive(metadataFileName, filePath + "\\" + senderFile + ".zip");
                     ZipManager.UpdateArchive(encryptedFileName, filePath + "\\" + senderFile + ".zip");
-                    if (Secondary)
+                    if (secondary)
                     {
                         ZipManager.UpdateArchive(encryptedFileName2, filePath + "\\" + senderFile + ".zip");
                     }
                     ZipManager.UpdateArchive(payloadFileName, filePath + "\\" + senderFile + ".zip");
 
-                    // success
-                    MessageBox.Show("XML Signing and Encryption process is complete!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
+                    MessageBox.Show(Resources.SigningAndEncryptionComplete, Text, MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
                 finally
                 {
-                    if (writer != null)
-                        writer.Close();
+                    writer?.Close();
                 }
-
-
-
             }
             catch (Exception ex)
             {
@@ -238,57 +227,49 @@ namespace WindowsFormsApplication1
         private void btnBrowseRecCert_Click(object sender, EventArgs e)
         {
             // load Notification Receiver key
-            txtReceiverCert.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
+            txtReceiverCert.Text =
+                dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
         }
 
         private void btnDecryptZip_Click(object sender, EventArgs e)
         {
-
             if (string.IsNullOrWhiteSpace(txtNotificationZip.Text) || string.IsNullOrWhiteSpace(txtReceiverCert.Text))
             {
-                // files validation
-                MessageBox.Show("Either the ZIP file or certificate was not specified!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.DecryptFilesMissing, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            string zipFolder = "";
+            string zipFolder;
             try
             {
-                //Deflate the zip archive
                 zipFolder = ZipManager.ExtractArchive(txtNotificationZip.Text, txtNotificationFolder.Text);
-
             }
             catch (Exception ex)
             {
                 ex.DisplayException(Text);
                 return;
             }
+
             // select encrypted key file
-            string encryptedKeyFile = "";
-            string encryptedPayloadFile = "";
-            string[] keyFiles = Directory.GetFiles(zipFolder, "*_Key", SearchOption.TopDirectoryOnly);
-            string[] payloadFiles = Directory.GetFiles(zipFolder, "*_Payload", SearchOption.TopDirectoryOnly);
+            var keyFiles = Directory.GetFiles(zipFolder, "*_Key", SearchOption.TopDirectoryOnly);
+            var payloadFiles = Directory.GetFiles(zipFolder, "*_Payload", SearchOption.TopDirectoryOnly);
 
             if (keyFiles.Length == 0)
             {
-                // key file validation
-                MessageBox.Show("There was no file found containing the encrypted AES key!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.MissingAesKeyFile, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (payloadFiles.Length == 0)
             {
-                // key file validation
-                MessageBox.Show("There was no file found containing the encrypted Payload!", Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(Resources.MissingEncryptedPayload, Text, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            encryptedKeyFile = keyFiles[0];
-            encryptedPayloadFile = payloadFiles[0];
 
-
-
-            byte[] encryptedAesKey = null;
-            byte[] decryptedAesKey = null;
-            byte[] aesVector = null;
+            var encryptedKeyFile = keyFiles[0];
+            var encryptedPayloadFile = payloadFiles[0];
+            byte[] encryptedAesKey;
+            byte[] decryptedAesKey;
+            byte[] aesVector;
 
             try
             {
@@ -298,6 +279,7 @@ namespace WindowsFormsApplication1
                 // decrypt AES key & generate default (empty) initialization vector
                 decryptedAesKey = AesManager.DecryptAesKey(encryptedAesKey, txtReceiverCert.Text, txtRecKeyPassword.Text);
                 aesVector = AesManager.GenerateRandomKey(16, true);
+
                 if (radECB.Checked != true)
                 {
                     aesVector = decryptedAesKey.Skip(32).Take(16).ToArray();
@@ -305,17 +287,15 @@ namespace WindowsFormsApplication1
                 }
 
                 // decrypt encrypted ZIP file using decrypted AES key
-                string decryptedFileName = encryptedPayloadFile.Replace("_Payload", "_Payload_decrypted.zip");
-                AesManager.DecryptFile(encryptedPayloadFile, decryptedFileName, decryptedAesKey, aesVector, radECB.Checked);
-
+                var decryptedFileName = encryptedPayloadFile.Replace("_Payload", "_Payload_decrypted.zip");
+                AesManager.DecryptFile(encryptedPayloadFile, decryptedFileName, decryptedAesKey, aesVector,
+                    radECB.Checked);
 
                 //Deflate the decrypted zip archive
                 ZipManager.ExtractArchive(decryptedFileName, decryptedFileName, false);
 
-
-
-                // success
-                MessageBox.Show("Notification decryption process is complete!", Text, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(Resources.DecryptionComplete, Text, MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -323,20 +303,9 @@ namespace WindowsFormsApplication1
             }
             finally
             {
-                if (encryptedAesKey != null)
-                {
-                    encryptedAesKey = null;
-                }
-
-                if (decryptedAesKey != null)
-                {
-                    decryptedAesKey = null;
-                }
-
-                if (aesVector != null)
-                {
-                    aesVector = null;
-                }
+                encryptedAesKey = null;
+                decryptedAesKey = null;
+                aesVector = null;
             }
         }
 
@@ -351,21 +320,11 @@ namespace WindowsFormsApplication1
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnBrowseKeyCert2_Click(object sender, EventArgs e)
         {
             txtKeyCert2.Text = dlgOpen.ShowDialogWithFilter("Certificate Files (*.cer, *.pfx, *.p12)|*.cer;*.pfx;*.p12");
         }
-
-     
-
-      
-     
-
-       
-
-       
     }
 }

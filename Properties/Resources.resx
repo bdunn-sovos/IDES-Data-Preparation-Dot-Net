@@ -114,4 +114,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+    <data name="MissingAesKeyFile" xml:space="preserve">
+    <value>There was no file found containing the encrypted AES key!</value>
+  </data>
+    <data name="MissingEncryptedPayload" xml:space="preserve">
+    <value>There was no file found containing the encrypted Payload!</value>
+  </data>
+    <data name="DecryptionComplete" xml:space="preserve">
+    <value>Notification decryption process is complete!</value>
+  </data>
+    <data name="XmlFileFieldNotFilled" xml:space="preserve">
+    <value>The XML file was not specified!</value>
+  </data>
+    <data name="SigningCertFieldNotFilled" xml:space="preserve">
+    <value>The Signing Certificate was not specified!</value>
+  </data>
+    <data name="SigningCertPasswordFieldNotFilled" xml:space="preserve">
+    <value>Signing Certificate password was not specified!</value>
+  </data>
+    <data name="EncryptionCertFieldNotFilled" xml:space="preserve">
+    <value>Encryption Certificate was not specified!</value>
+  </data>
+    <data name="SecondaryReceiverFieldNotFilled" xml:space="preserve">
+    <value>Secondary receiver was not specified!</value>
+  </data>
+    <data name="SigningAndEncryptionComplete" xml:space="preserve">
+    <value>XML Signing and Encryption process is complete!</value>
+  </data>
+    <data name="DecryptFilesMissing" xml:space="preserve">
+    <value>Either the ZIP file or certificate was not specified!</value>
+  </data>
 </root>
